@@ -10,14 +10,8 @@ const pool = new Pool({
   password: process.env.PASSWORD,
 });
 
-const rowsPerPage = 50;
-const pageNumber = 3;
-
-const offset = (pageNumber - 1) * rowsPerPage;
-
 const query = {
-  text: "SELECT * FROM journey_temp LIMIT $1 OFFSET $2",
-  values: [rowsPerPage, offset],
+  text: "SELECT * FROM journey_temp",
 };
 module.exports = {
   query: (text, params) => pool.query(text, params),

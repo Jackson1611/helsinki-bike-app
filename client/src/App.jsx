@@ -3,18 +3,23 @@ import { DataGrid } from "@mui/x-data-grid";
 
 function App() {
   const [data, setData] = useState([]);
-  const pageSize = 50;
+  const [page, setPage] = useState(1);
+  const [totalRows, setTotalRows] = useState(1);
+  const pageSize = 20;
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch("http://localhost:3001/journeys");
+      const response = await fetch(
+        `http://localhost:3001/journeys?page=${page}&size=${pageSize}`
+      );
       const data = await response.json();
-      setData(data);
+      setData(data.journeys);
+      setTotalRows(data.totalRowCount);
       console.log(data);
     }
 
     fetchData();
-  }, []);
+  }, [page]);
 
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
@@ -41,17 +46,26 @@ function App() {
   ];
 
   return (
-    <div
-      style={{
-        display: "flex",
-        height: 1000,
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <DataGrid rows={data} columns={columns} pageSize={pageSize} />
+    <div>
+      <div
+        style={{
+          display: "flex",
+          height: 1000,
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <DataGrid
+          rows={data}
+          pagination
+          columns={columns}
+          pageSize={pageSize}
+          onPageChange={(params) => setPage(params.page)}
+          rowCount={totalRows}
+        />
+      </div>
     </div>
   );
 }
