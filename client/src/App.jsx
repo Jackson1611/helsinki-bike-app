@@ -2,49 +2,49 @@ import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 
 function App() {
-  const [data, setData] = useState([]);
+  const [journeys, setJourneys] = useState([]);
+  const [totalRows, setTotalRows] = useState(0);
   const [page, setPage] = useState(1);
-  const [totalRows, setTotalRows] = useState(1);
-  const pageSize = 17;
+  const [pageSize, setPageSize] = useState(17);
+  const [orderBy, setOrderBy] = useState("");
+  const [sortDirection, setSortDirection] = useState("ASC");
 
   useEffect(() => {
-    async function fetchData() {
-      const response = await fetch(
-        `http://localhost:3001/journeys?page=${page}&size=${pageSize}`
-      );
-      const data = await response.json();
-      setData(data.journeys);
-      setTotalRows(data.totalRowCount);
-      console.log(data);
+    const fetchJourneys = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3001/journeys?page=${page}&size=${pageSize}&orderby=${orderBy}&sort=${sortDirection}`
+        );
+        const data = await response.json();
+        if (data.success) {
+          setJourneys(data.journeys);
+          setTotalRows(data.totalRowCount);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchJourneys();
+  }, [page, pageSize, orderBy, sortDirection]);
+
+  const handleSortModelChange = (params) => {
+    if (params.length > 0) {
+      setOrderBy(params[0].field);
+      setSortDirection(params[0].sort);
     }
-
-    fetchData();
-  }, [page]);
-
+  };
   const columns = [
-    { field: "id", headerName: "ID", width: 100 },
     { field: "departure_time", headerName: "Departure Time", width: 200 },
     { field: "return_time", headerName: "Return Time", width: 200 },
     {
-      field: "departure_station_id",
-      headerName: "Departure Station ID",
-      width: 150,
-    },
-    {
       field: "departure_station_name",
-      headerName: "Departure Station Name",
+      headerName: "Departure Station",
       width: 200,
     },
-    { field: "return_station_id", headerName: "Return Station ID", width: 200 },
-    {
-      field: "return_station_name",
-      headerName: "Return Station Name",
-      width: 200,
-    },
-    { field: "covered_distance", headerName: "Covered Distance", width: 200 },
+    { field: "return_station_name", headerName: "Return Station", width: 200 },
     { field: "duration", headerName: "Duration", width: 150 },
+    { field: "covered_distance", headerName: "Covered Distance", width: 200 },
   ];
-
   return (
     <div style={{ display: "flex", height: "100vh" }}>
       <div style={{ backgroundColor: "#f2f2f2", width: "20%" }}>
@@ -59,15 +59,17 @@ function App() {
           justifyContent: "center",
         }}
       >
-        <div style={{ width: "80%", height: "1000px" }}>
+        <div style={{ display: "flex", justifyContent: "center" }}></div>
+        <div style={{ width: "80%", height: "1012px" }}>
           <DataGrid
-            rows={data}
-            pagination
+            rows={journeys}
             columns={columns}
+            pagination
             pageSize={pageSize}
             rowCount={totalRows}
-            onPageChange={(newPage) => setPage(newPage)}
             hideFooterPagination
+            onSortModelChange={handleSortModelChange}
+            sortModel={[{ field: orderBy, sort: sortDirection }]}
           />
         </div>
         <div
