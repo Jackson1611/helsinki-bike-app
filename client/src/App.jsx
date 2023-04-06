@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
+import { BsArrowRight, BsArrowLeft } from "react-icons/bs";
+import { format } from "date-fns";
 
 function App() {
   const [journeys, setJourneys] = useState([]);
@@ -7,7 +9,7 @@ function App() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(17);
   const [orderBy, setOrderBy] = useState("");
-  const [sortDirection, setSortDirection] = useState("ASC");
+  const [sortDirection, setSortDirection] = useState("asc");
 
   useEffect(() => {
     const fetchJourneys = async () => {
@@ -34,12 +36,25 @@ function App() {
     }
   };
   const columns = [
-    { field: "departure_time", headerName: "Departure Time", width: 200 },
-    { field: "return_time", headerName: "Return Time", width: 200 },
+    {
+      field: "departure_time",
+      headerName: "Departure Time",
+      width: 200,
+      valueFormatter: (params) =>
+        format(new Date(params.value), " HH:mm yyyy-MM-dd "),
+    },
+
     {
       field: "departure_station_name",
       headerName: "Departure Station",
       width: 200,
+    },
+    {
+      field: "return_time",
+      headerName: "Return Time",
+      width: 200,
+      valueFormatter: (params) =>
+        format(new Date(params.value), " HH:mm yyyy-MM-dd "),
     },
     { field: "return_station_name", headerName: "Return Station", width: 200 },
     { field: "duration", headerName: "Duration", width: 150 },
@@ -47,8 +62,16 @@ function App() {
   ];
   return (
     <div style={{ display: "flex", height: "100vh" }}>
-      <div style={{ backgroundColor: "#f2f2f2", width: "20%" }}>
+      <div
+        style={{
+          backgroundColor: "#f2f2f2",
+          width: "20%",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
         {/* Navigation bar content here */}
+        <h1>Helsinki bike app</h1>
       </div>
       <div
         style={{
@@ -59,7 +82,10 @@ function App() {
           justifyContent: "center",
         }}
       >
-        <div style={{ display: "flex", justifyContent: "center" }}></div>
+        <div style={{}}>
+          <h1>Journeys</h1>
+        </div>
+
         <div style={{ width: "80%", height: "1012px" }}>
           <DataGrid
             rows={journeys}
@@ -78,16 +104,16 @@ function App() {
           <button
             disabled={page === 1}
             onClick={() => setPage(page - 1)}
-            style={{ fontSize: 16, padding: 10 }}
+            style={{ fontSize: 30, padding: 10 }}
           >
-            Previous Page
+            <BsArrowLeft />
           </button>
           <button
             disabled={page * pageSize >= totalRows}
             onClick={() => setPage(page + 1)}
-            style={{ fontSize: 16, padding: 10, marginLeft: 10 }}
+            style={{ fontSize: 30, padding: 10, marginLeft: 10 }}
           >
-            Next Page
+            <BsArrowRight />
           </button>
         </div>
       </div>

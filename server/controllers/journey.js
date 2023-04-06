@@ -22,7 +22,7 @@ const getAllJourneys = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      orderby: orderby,
+      orderby,
       message: `Journey data in page ${page} retrieved successfully`,
       totalRowCount,
       currentPage: page,
