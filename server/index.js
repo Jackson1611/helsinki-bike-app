@@ -3,7 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
 const journeyRoutes = require("./routes/journey");
-
+const stationRoutes = require("./routes/station");
 const app = express();
 
 //middleware
@@ -12,6 +12,7 @@ app.use(cors());
 
 const port = process.env.PORT || 3080;
 
+app.use("/staitons", stationRoutes);
 app.use("/journeys", journeyRoutes);
 
 app.listen(port, () => {
