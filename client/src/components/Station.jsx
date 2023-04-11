@@ -87,8 +87,6 @@ export function Station() {
         position: "relative",
       }}
     >
-      <Typography variant="h3">Stations</Typography>
-
       <DataGrid
         slots={{
           toolbar: () => (

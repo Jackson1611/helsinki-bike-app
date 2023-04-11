@@ -68,6 +68,14 @@ export function SingleStation({ station, onClose }) {
               <div>
                 <strong>Capacity:</strong> {station?.capacity || "Loading..."}
               </div>
+              <div>
+                <strong>Total journeys starting from the station: </strong>{" "}
+                {station?.total_journeys_starting || "Loading..."}
+              </div>
+              <div>
+                <strong>Total journeys ending at the station:</strong>{" "}
+                {station?.total_journeys_ending || "Loading..."}
+              </div>
             </DialogContent>
           </div>
           <div>
@@ -81,10 +89,7 @@ export function SingleStation({ station, onClose }) {
                 marginRight: "35px",
               }}
             >
-              <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
-              />
+              <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
               <Marker position={[station?.latitude, station?.longitude]}>
                 <Popup>{station?.fi_name}</Popup>
               </Marker>

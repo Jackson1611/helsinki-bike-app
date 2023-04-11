@@ -90,8 +90,6 @@ export const Journey = () => {
         position: "relative",
       }}
     >
-      <Typography variant="h3">Journeys</Typography>
-
       <div style={{ height: 1000, width: "100%" }}>
         <DataGrid
           rows={journeys}
