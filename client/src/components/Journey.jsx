@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { BsArrowRight, BsArrowLeft } from "react-icons/bs";
 import { format } from "date-fns";
+import { Button, Typography } from "@mui/material";
 
 export const Journey = () => {
   const [journeys, setJourneys] = useState([]);
@@ -50,6 +51,11 @@ export const Journey = () => {
       width: 200,
     },
     {
+      field: "departure_station_id",
+      headerName: "Departure Station ID",
+      width: 200,
+    },
+    {
       field: "return_time",
       headerName: "Return Time",
       width: 200,
@@ -57,12 +63,34 @@ export const Journey = () => {
         format(new Date(params.value), " HH:mm yyyy-MM-dd "),
     },
     { field: "return_station_name", headerName: "Return Station", width: 200 },
-    { field: "duration", headerName: "Duration", width: 150 },
-    { field: "covered_distance", headerName: "Covered Distance", width: 200 },
+    {
+      field: "return_station_id",
+      headerName: "Return Station ID",
+      width: 200,
+    },
+    {
+      field: "duration",
+      headerName: "Duration (minutes)",
+      width: 150,
+      valueFormatter: (params) => (params.value / 60).toFixed(2),
+    },
+    {
+      field: "covered_distance",
+      headerName: "Covered Distance (km)",
+      width: 200,
+      valueFormatter: (params) => (params.value / 1000).toFixed(2),
+    },
   ];
   return (
-    <div>
-      <h1>Journeys</h1>
+    <div
+      style={{
+        height: 1100,
+        width: 1800,
+        margin: "0 auto",
+        position: "relative",
+      }}
+    >
+      <Typography variant="h3">Journeys</Typography>
 
       <div style={{ height: 1000, width: "100%" }}>
         <DataGrid

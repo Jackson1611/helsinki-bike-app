@@ -1,32 +1,35 @@
 import React, { useEffect, useState } from "react";
-import {
-  DataGrid,
-  GridToolbar,
-  GridToolbarQuickFilter,
-  GridLogicOperator,
-} from "@mui/x-data-grid";
+import { DataGrid, GridToolbarQuickFilter } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
+import { Button, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
+import { SingleStation } from "./SingleStaion";
 
 export function Station() {
   const [stations, setStations] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [selectedStation, setSelectedStation] = useState(null);
+  const [openDialog, setOpenDialog] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:3001/staitons")
+    fetch("http://localhost:3001/stations")
       .then((response) => response.json())
       .then((data) => {
         setStations(data.stations);
-        setFilteredStations(data.stations);
       })
       .catch((error) => console.error(error));
   }, []);
+
+  useEffect(() => {
+    if (!openDialog) {
+      setSelectedStation(null);
+    }
+  }, [openDialog]);
 
   function QuickSearchToolbar() {
     return (
       <Box
         sx={{
-          p: 0.5,
-          pb: 0,
           display: "flex",
           justifyContent: "flex-end",
           padding: "10px",
@@ -43,6 +46,13 @@ export function Station() {
       </Box>
     );
   }
+
+  const handleViewStation = (id) => {
+    const station = stations.find((station) => station.id === id);
+    setSelectedStation(station);
+    setOpenDialog(true);
+  };
+
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
     { field: "fi_name", headerName: "Finnish Name", width: 200 },
@@ -52,15 +62,33 @@ export function Station() {
     { field: "se_address", headerName: "Swedish Address", width: 200 },
     { field: "fi_city", headerName: "Finnish City", width: 150 },
     { field: "se_city", headerName: "Swedish City", width: 150 },
-    { field: "operator_name", headerName: "Operator", width: 200 },
     { field: "capacity", headerName: "Capacity", width: 150 },
-    { field: "longitude", headerName: "Longitude", width: 150 },
-    { field: "latitude", headerName: "Latitude", width: 150 },
+    {
+      field: "actions",
+      headerName: "Actions",
+      width: 150,
+      renderCell: (params) => {
+        const { id } = params.row;
+        return (
+          <Button variant="contained" onClick={() => handleViewStation(id)}>
+            View station
+          </Button>
+        );
+      },
+    },
   ];
 
   return (
-    <div style={{ height: 1000, width: "100%" }}>
-      <h1>Stations</h1>
+    <div
+      style={{
+        height: 1100,
+        width: 1800,
+        margin: "0 auto",
+        position: "relative",
+      }}
+    >
+      <Typography variant="h3">Stations</Typography>
+
       <DataGrid
         slots={{
           toolbar: () => (
@@ -72,6 +100,14 @@ export function Station() {
         rows={stations}
         columns={columns}
       />
+
+      {selectedStation && (
+        <SingleStation
+          station={selectedStation}
+          open={openDialog}
+          onClose={() => setOpenDialog(false)}
+        />
+      )}
     </div>
   );
 }

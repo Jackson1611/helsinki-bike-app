@@ -12,7 +12,7 @@ app.use(cors());
 
 const port = process.env.PORT || 3080;
 
-app.use("/staitons", stationRoutes);
+app.use("/stations", stationRoutes);
 app.use("/journeys", journeyRoutes);
 
 app.listen(port, () => {

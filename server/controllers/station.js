@@ -17,4 +17,29 @@ const getAllStations = async (req, res) => {
   }
 };
 
-module.exports = { getAllStations };
+const getStationById = async (req, res) => {
+  const stationId = req.params.id;
+
+  try {
+    const stationQueryString = "SELECT * FROM station WHERE id = $1";
+    const stationResult = await db.query(stationQueryString, [stationId]);
+
+    if (stationResult.rows.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Station not found" });
+    }
+
+    const station = stationResult.rows[0];
+
+    res.status(200).json({
+      success: true,
+      station,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
+
+module.exports = { getAllStations, getStationById };
