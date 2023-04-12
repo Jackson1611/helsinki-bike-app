@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid, GridToolbarQuickFilter } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
-import { BsArrowRight, BsArrowLeft } from "react-icons/bs";
 import { format } from "date-fns";
 import { Button, Typography } from "@mui/material";
 import { JourneyRoutes } from "./JourneyRoutes";
+import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 
 export const Journey = () => {
   const [journeys, setJourneys] = useState([]);
@@ -171,20 +171,20 @@ export const Journey = () => {
         )}
       </div>
       <div style={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
-        <button
+        <Button
           disabled={page === 1}
           onClick={() => setPage(page - 1)}
           style={{ fontSize: 30, padding: 10 }}
         >
-          <BsArrowLeft />
-        </button>
-        <button
+          <FaArrowLeft />
+        </Button>
+        <Button
           disabled={page * pageSize >= totalRows}
           onClick={() => setPage(page + 1)}
           style={{ fontSize: 30, padding: 10, marginLeft: 10 }}
         >
-          <BsArrowRight />
-        </button>
+          <FaArrowRight />
+        </Button>
       </div>
     </div>
   );
