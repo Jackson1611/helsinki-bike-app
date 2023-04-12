@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbarQuickFilter } from "@mui/x-data-grid";
+import Box from "@mui/material/Box";
 import { BsArrowRight, BsArrowLeft } from "react-icons/bs";
 import { format } from "date-fns";
 import { Button, Typography } from "@mui/material";
+import { JourneyRoutes } from "./JourneyRoutes";
 
 export const Journey = () => {
   const [journeys, setJourneys] = useState([]);
@@ -10,8 +12,11 @@ export const Journey = () => {
   const [page, setPage] = useState(1);
   const [orderBy, setOrderBy] = useState("");
   const [sortDirection, setSortDirection] = useState("asc");
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedJourney, setSelectedJourney] = useState(null);
 
-  const pageSize = 17;
+  const pageSize = 200;
+
   useEffect(() => {
     const fetchJourneys = async () => {
       try {
@@ -20,6 +25,7 @@ export const Journey = () => {
         );
         const data = await response.json();
         if (data.success) {
+          console.log(data);
           setJourneys(data.journeys);
           setTotalRows(data.totalRowCount);
         }
@@ -30,12 +36,46 @@ export const Journey = () => {
     fetchJourneys();
   }, [page, pageSize, orderBy, sortDirection]);
 
+  useEffect(() => {
+    if (!openDialog) {
+      setSelectedJourney(null);
+    }
+  }, [openDialog]);
+
   const handleSortModelChange = (params) => {
     if (params.length > 0) {
       setOrderBy(params[0].field);
       setSortDirection(params[0].sort);
     }
   };
+
+  const handleViewJourney = (id) => {
+    const journey = journeys.find((journey) => journey.id === id);
+    setSelectedJourney(journey);
+    setOpenDialog(true);
+  };
+
+  function QuickSearchToolbar() {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          padding: "10px",
+        }}
+      >
+        <GridToolbarQuickFilter
+          quickFilterParser={(searchInput) =>
+            searchInput
+              .split(",")
+              .map((value) => value.trim())
+              .filter((value) => value !== "")
+          }
+        />
+      </Box>
+    );
+  }
+
   const columns = [
     {
       field: "departure_time",
@@ -80,6 +120,19 @@ export const Journey = () => {
       width: 200,
       valueFormatter: (params) => (params.value / 1000).toFixed(2),
     },
+    {
+      field: "actions",
+      headerName: "Actions",
+      width: 150,
+      renderCell: (params) => {
+        const { id } = params.row;
+        return (
+          <Button variant="contained" onClick={() => handleViewJourney(id)}>
+            View map
+          </Button>
+        );
+      },
+    },
   ];
   return (
     <div
@@ -90,17 +143,32 @@ export const Journey = () => {
         position: "relative",
       }}
     >
-      <div style={{ height: 1000, width: "100%" }}>
+      <div style={{ height: 1100, width: "100%" }}>
         <DataGrid
+          slots={{
+            toolbar: () => (
+              <React.Fragment>
+                <QuickSearchToolbar />
+              </React.Fragment>
+            ),
+          }}
+          disableNextPage={true}
           rows={journeys}
           columns={columns}
           pagination
           pageSize={pageSize}
           rowCount={totalRows}
-          hideFooterPagination
           onSortModelChange={handleSortModelChange}
           sortModel={[{ field: orderBy, sort: sortDirection }]}
         />
+
+        {selectedJourney && (
+          <JourneyRoutes
+            journey={selectedJourney}
+            open={openDialog}
+            onClose={() => setOpenDialog(false)}
+          />
+        )}
       </div>
       <div style={{ display: "flex", justifyContent: "center", marginTop: 20 }}>
         <button
