@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DataGrid, GridToolbarQuickFilter } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import { format } from "date-fns";
-import { Button, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import { JourneyRoutes } from "./JourneyRoutes";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 

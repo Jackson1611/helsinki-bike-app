@@ -9,8 +9,8 @@ const getAllJourneys = async (req, res) => {
     orderby = orderby || "departure_time";
     sort = sort || "ASC";
 
-    const countQueryString = `SELECT COUNT(*) FROM journey_temp`;
-    const journeysQueryString = `SELECT * FROM journey_temp ORDER BY ${orderby} ${sort} LIMIT $1 OFFSET $2 `;
+    const countQueryString = `SELECT COUNT(*) FROM journey`;
+    const journeysQueryString = `SELECT * FROM journey ORDER BY ${orderby} ${sort} LIMIT $1 OFFSET $2 `;
 
     const countResult = await db.query(countQueryString);
     const totalRowCount = Number(countResult.rows[0].count);
