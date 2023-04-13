@@ -151,6 +151,18 @@ npm run dev
 cd client
 npm run dev
 ```
+
+9. Instruction for running backend test:
+- Change to the server directory:
+```bash 
+cd bike-app/server
+ ```
+ 
+- Run the test using the following command: 
+```bash
+npm test
+```
+
 ### Usage:
 
 - The Bike App allows users to view journey statistics such as total distance, average duration, and busiest stations.
