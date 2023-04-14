@@ -8,9 +8,11 @@ https://user-images.githubusercontent.com/103312138/231536057-3c50f20f-09fa-417b
 ## Preview 
 
 ### Journey list:
-![Screenshot 2023-04-12 190303](https://user-images.githubusercontent.com/103312138/231715372-0a0e6a07-8189-4050-af15-a867406804f3.png)
+![Screenshot 2023-04-14 133530](https://user-images.githubusercontent.com/103312138/232022002-58e51739-3886-4345-99a1-9f413846f0b7.png)
+### Top 5 Stations :
+![Screenshot 2023-04-14 133552](https://user-images.githubusercontent.com/103312138/232022087-a8be2809-39fd-4f08-b21e-22b6131b21af.png)
 ### Journey on map:
-![Screenshot 2023-04-12 190439](https://user-images.githubusercontent.com/103312138/231715395-ceb57997-7724-4512-ba51-cec7934e1429.png)
+![Screenshot 2023-04-14 133749](https://user-images.githubusercontent.com/103312138/232022262-b2f739ee-f6ab-4f49-a38d-77b745895616.png)
 ### Station list:
 ![Screenshot 2023-04-12 190509](https://user-images.githubusercontent.com/103312138/231715409-715e7ebd-931f-405c-8dd7-1683780bfe4f.png)
 ### Add new station dialog:
