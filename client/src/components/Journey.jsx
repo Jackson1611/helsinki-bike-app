@@ -3,7 +3,7 @@ import { DataGrid, GridToolbarQuickFilter } from "@mui/x-data-grid";
 import Box from "@mui/material/Box";
 import { format } from "date-fns";
 import { Button } from "@mui/material";
-import { JourneyRoutes } from "./JourneyRoutes";
+import { JourneyMap } from "./JourneyRoutes";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 
 export const Journey = () => {
@@ -163,7 +163,7 @@ export const Journey = () => {
         />
 
         {selectedJourney && (
-          <JourneyRoutes
+          <JourneyMap
             journey={selectedJourney}
             open={openDialog}
             onClose={() => setOpenDialog(false)}

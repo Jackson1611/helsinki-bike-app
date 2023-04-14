@@ -9,9 +9,8 @@ import {
 } from "@mui/material";
 import { MapContainer, TileLayer, Polyline, Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 
-export const JourneyRoutes = ({ journey, onClose }) => {
+export const JourneyMap = ({ journey, onClose }) => {
   const [open, setOpen] = useState(true);
 
   const handleClose = () => {

@@ -146,7 +146,7 @@ export function AddStation(props) {
                 value={newStation.se_name}
                 label="Name (Swedish)"
                 fullWidth
-                onChange={handleInputChange}
+                onChange={(event) => handleInputChange(event)}
                 error={errors.se_name}
                 helperText={errors.se_name}
               />
@@ -156,7 +156,7 @@ export function AddStation(props) {
                 value={newStation.en_name}
                 label="Name (English)"
                 fullWidth
-                onChange={handleInputChange}
+                onChange={(event) => handleInputChange(event)}
                 error={errors.en_name}
                 helperText={errors.en_name}
               />
@@ -166,7 +166,7 @@ export function AddStation(props) {
                 value={newStation.fi_address}
                 label="Address (Finnish)"
                 fullWidth
-                onChange={handleInputChange}
+                onChange={(event) => handleInputChange(event)}
                 error={errors.fi_address}
                 helperText={errors.fi_address}
               />
@@ -176,7 +176,7 @@ export function AddStation(props) {
                 value={newStation.se_address}
                 label="Address (Swedish)"
                 fullWidth
-                onChange={handleInputChange}
+                onChange={(event) => handleInputChange(event)}
                 error={errors.se_address}
                 helperText={errors.se_address}
               />
@@ -186,7 +186,7 @@ export function AddStation(props) {
                 value={newStation.fi_city}
                 label="City (Finnish)"
                 fullWidth
-                onChange={handleInputChange}
+                onChange={(event) => handleInputChange(event)}
                 error={errors.fi_city}
                 helperText={errors.fi_city}
               />
@@ -196,7 +196,7 @@ export function AddStation(props) {
                 value={newStation.se_city}
                 label="City (Swedish)"
                 fullWidth
-                onChange={handleInputChange}
+                onChange={(event) => handleInputChange(event)}
                 error={errors.se_city}
                 helperText={errors.se_city}
               />
@@ -206,7 +206,7 @@ export function AddStation(props) {
                 value={newStation.operator_name}
                 label="Operator"
                 fullWidth
-                onChange={handleInputChange}
+                onChange={(event) => handleInputChange(event)}
                 error={errors.operator_name}
                 helperText={errors.operator_name}
               />
@@ -216,7 +216,7 @@ export function AddStation(props) {
                 value={newStation.capacity}
                 label="Capacity"
                 fullWidth
-                onChange={handleInputChange}
+                onChange={(event) => handleInputChange(event)}
                 error={errors.capacity}
                 helperText={errors.capacity}
               />

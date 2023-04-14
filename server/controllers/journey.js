@@ -35,4 +35,42 @@ const getAllJourneys = async (req, res) => {
   }
 };
 
-module.exports = { getAllJourneys };
+const getPopularStations = async (req, res) => {
+  try {
+    // Query for top 5 most popular departure stations
+    const popularDepartureStationsQueryString = `
+      SELECT departure_station_name, COUNT(*) as count 
+      FROM journey_temp 
+      GROUP BY departure_station_name 
+      ORDER BY count DESC 
+      LIMIT 5`;
+    const popularDepartureStationsResult = await db.query(
+      popularDepartureStationsQueryString
+    );
+    const popularDepartureStations = popularDepartureStationsResult.rows;
+
+    // Query for top 5 most popular return stations
+    const popularReturnStationsQueryString = `
+      SELECT return_station_name, COUNT(*) as count 
+      FROM journey_temp 
+      GROUP BY return_station_name 
+      ORDER BY count DESC 
+      LIMIT 5`;
+    const popularReturnStationsResult = await db.query(
+      popularReturnStationsQueryString
+    );
+    const popularReturnStations = popularReturnStationsResult.rows;
+
+    res.status(200).json({
+      success: true,
+      message: `Top 5 most popular departure and return stations retrieved successfully`,
+      popularDepartureStations,
+      popularReturnStations,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
+
+module.exports = { getAllJourneys, getPopularStations };
