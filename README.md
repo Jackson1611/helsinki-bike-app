@@ -91,9 +91,9 @@ CREATE UNIQUE INDEX station_id_uindex
     ON station (id);
 
 ```
--Create journey table:
+- Create temporary journey table:
 ```bash
-CREATE TABLE journey(
+CREATE TABLE journey_temp(
     departure_time         TIMESTAMP,
     return_time            TIMESTAMP,
     departure_station_id   INT,
@@ -105,28 +105,38 @@ CREATE TABLE journey(
 );
 
 ```
--Import the data: 
+- Import the data: 
 ```bash
 COPY station(fid, id, fi_name, se_name, en_name, fi_address, se_address, fi_city, se_city, operator_name, capacity, longitude, latitude)
 FROM 'D:\bike-app\server\data\station.csv' 
 DELIMITER ',' 
 CSV HEADER;
 
-COPY journey(departure_time, return_time, departure_station_id, departure_station_name, return_station_id, return_station_name, covered_distance, duration)
+COPY journey_temp(departure_time, return_time, departure_station_id, departure_station_name, return_station_id, return_station_name, covered_distance, duration)
 FROM 'D:\bike-app\server\data\2021-05.csv'
 DELIMITER ','
 CSV HEADER;
 
-COPY journey(departure_time, return_time, departure_station_id, departure_station_name, return_station_id, return_station_name, covered_distance, duration)
+COPY journey_temp(departure_time, return_time, departure_station_id, departure_station_name, return_station_id, return_station_name, covered_distance, duration)
 FROM 'D:\bike-app\server\data\2021-06.csv'
 DELIMITER ','
 CSV HEADER;
 
-COPY journey(departure_time, return_time, departure_station_id, departure_station_name, return_station_id, return_station_name, covered_distance, duration)
+COPY journey_temp(departure_time, return_time, departure_station_id, departure_station_name, return_station_id, return_station_name, covered_distance, duration)
 FROM 'D:\bike-app\server\data\2021-07.csv'
 DELIMITER ','
 CSV HEADER;
 
+```
+
+- Make validated Journey table
+```bash
+CREATE TABLE journey AS
+SELECT *
+FROM journey_temp
+WHERE covered_distance >= 10 AND duration >= 10;
+
+ALTER TABLE journey ADD COLUMN id SERIAL PRIMARY KEY;
 ```
 
 5. Start the server:
@@ -151,6 +161,18 @@ npm run dev
 cd client
 npm run dev
 ```
+
+9. Instruction for running backend test:
+- Change to the server directory:
+```bash 
+cd bike-app/server
+ ```
+ 
+- Run the test using the following command: 
+```bash
+npm test
+```
+
 ### Usage:
 
 - The Bike App allows users to view journey statistics such as total distance, average duration, and busiest stations.
