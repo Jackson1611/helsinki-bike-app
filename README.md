@@ -129,12 +129,14 @@ CSV HEADER;
 
 ```
 
-- Make validated Journey table
+- Make validated Journey table from temporary journey table 
 ```bash
 CREATE TABLE journey AS
 SELECT *
 FROM journey_temp
 WHERE covered_distance >= 10 AND duration >= 10;
+
+DROP TABLE IF EXISTS journey_temp;
 
 ALTER TABLE journey ADD COLUMN id SERIAL PRIMARY KEY;
 ```
@@ -182,6 +184,6 @@ npm test
 
 ## Technologies Used:
 
-- Frontend: React, Material-UI
+- Frontend: React, Material-UI, Datagrid, MapView, Dialog
 - Backend: Express, Node.js, PostgreSQL, 
 - Other tools/libraries: date-fns , Dotenv, leafletjs
