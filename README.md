@@ -32,7 +32,7 @@ Before building and running the app, make sure you have the following installed 
 - https://dev.hsl.fi/citybikes/od-trips-2021/2021-07.csv
 - https://opendata.arcgis.com/datasets/726277c507ef4914b0aec3cbcfcbfafc_0.csv
 
-
+Save the CSV file to this directory bike-app\server\data\
 ## Getting Started
 
 1. Clone the repository:
@@ -183,6 +183,8 @@ npm test
 - Users can also view information about each city bicycle station, including the station name, address, operator, and capacity.
 - The app provides a search functionality to search for specific stations or journeys.
 - Users can also view the details of each journey, including departure and return times, covered distance, and duration.
+- Users can also view top 5 most popular stations for both departure and return.
+- Users can add new station and visually add the position on the map by dragging the marker to the position of the station.
 
 ## Technologies Used:
 
