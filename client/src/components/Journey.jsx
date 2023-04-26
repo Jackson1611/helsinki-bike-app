@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import { Button } from "@mui/material";
 import { JourneyMap } from "./JourneyRoutes";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
+import { TopStation } from "./TopStation";
 
 export const Journey = () => {
   const [journeys, setJourneys] = useState([]);
@@ -64,6 +65,7 @@ export const Journey = () => {
           padding: "10px",
         }}
       >
+        <TopStation />
         <GridToolbarQuickFilter
           quickFilterParser={(searchInput) =>
             searchInput

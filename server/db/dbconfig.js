@@ -10,9 +10,6 @@ const pool = new Pool({
   password: process.env.PASSWORD,
 });
 
-const query = {
-  text: "SELECT * FROM journey_temp",
-};
 module.exports = {
   query: (text, params) => pool.query(text, params),
 };
