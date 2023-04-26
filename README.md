@@ -8,9 +8,11 @@ https://user-images.githubusercontent.com/103312138/231536057-3c50f20f-09fa-417b
 ## Preview 
 
 ### Journey list:
-![Screenshot 2023-04-12 190303](https://user-images.githubusercontent.com/103312138/231715372-0a0e6a07-8189-4050-af15-a867406804f3.png)
+![Screenshot 2023-04-14 133530](https://user-images.githubusercontent.com/103312138/232022002-58e51739-3886-4345-99a1-9f413846f0b7.png)
+### Top 5 Stations :
+![Screenshot 2023-04-14 133552](https://user-images.githubusercontent.com/103312138/232022087-a8be2809-39fd-4f08-b21e-22b6131b21af.png)
 ### Journey on map:
-![Screenshot 2023-04-12 190439](https://user-images.githubusercontent.com/103312138/231715395-ceb57997-7724-4512-ba51-cec7934e1429.png)
+![Screenshot 2023-04-14 133749](https://user-images.githubusercontent.com/103312138/232022262-b2f739ee-f6ab-4f49-a38d-77b745895616.png)
 ### Station list:
 ![Screenshot 2023-04-12 190509](https://user-images.githubusercontent.com/103312138/231715409-715e7ebd-931f-405c-8dd7-1683780bfe4f.png)
 ### Add new station dialog:
@@ -30,7 +32,7 @@ Before building and running the app, make sure you have the following installed 
 - https://dev.hsl.fi/citybikes/od-trips-2021/2021-07.csv
 - https://opendata.arcgis.com/datasets/726277c507ef4914b0aec3cbcfcbfafc_0.csv
 
-
+Save the CSV file to this directory bike-app\server\data\
 ## Getting Started
 
 1. Clone the repository:
@@ -129,12 +131,14 @@ CSV HEADER;
 
 ```
 
-- Make validated Journey table
+- Make validated Journey table from temporary journey table 
 ```bash
 CREATE TABLE journey AS
 SELECT *
 FROM journey_temp
 WHERE covered_distance >= 10 AND duration >= 10;
+
+DROP TABLE IF EXISTS journey_temp;
 
 ALTER TABLE journey ADD COLUMN id SERIAL PRIMARY KEY;
 ```
@@ -179,9 +183,11 @@ npm test
 - Users can also view information about each city bicycle station, including the station name, address, operator, and capacity.
 - The app provides a search functionality to search for specific stations or journeys.
 - Users can also view the details of each journey, including departure and return times, covered distance, and duration.
+- Users can also view top 5 most popular stations for both departure and return.
+- Users can add new station and visually add the position on the map by dragging the marker to the position of the station.
 
 ## Technologies Used:
 
-- Frontend: React, Material-UI
+- Frontend: React, Material-UI, Datagrid, MapView, Dialog
 - Backend: Express, Node.js, PostgreSQL, 
 - Other tools/libraries: date-fns , Dotenv, leafletjs
